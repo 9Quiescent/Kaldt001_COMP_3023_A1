@@ -19,3 +19,8 @@ int Card::getPointValue() const
 {
     return pointValue;
 }
+
+std::string Card::toStringWithPoints() const
+{
+    return toString() + "(" + std::to_string(getPointValue()) + ")";
+}

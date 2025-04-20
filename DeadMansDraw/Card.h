@@ -19,5 +19,6 @@ public:
     int getPointValue() const;
 
     virtual std::string toString() const = 0;
+    virtual std::string toStringWithPoints() const;
     virtual void play(Player& player) = 0;
 };

@@ -61,7 +61,7 @@ void Game::bankCards(Player& player)
     for (size_t i = 0; i < playArea.size(); ++i) {
         if (playArea[i] != nullptr)
         {
-            std::cout << playArea[i]->toString();
+            std::cout << playArea[i]->toStringWithPoints();
             if (i != playArea.size() - 1)
                 std::cout << ", ";
         }
@@ -127,7 +127,7 @@ void Game::printBank(Player* player) const
         for (Card* card : bank)
         {
             if (card != nullptr)
-                std::cout << "  " << card->toString() << std::endl;
+                std::cout << "  " << card->toStringWithPoints() << std::endl;
         }
     }
 }

@@ -73,13 +73,13 @@ void GameController::startGame() {
                 break;
             }
 
-            std::cout << currentPlayer->getName() << " draws " << drawnCard->toString() << "!" << std::endl;
+            std::cout << currentPlayer->getName() << " draws " << drawnCard->toStringWithPoints() << "!" << std::endl;
 
             currentPlayer->addToPlayArea(drawnCard);
             std::cout << currentPlayer->getName() << "'s Play Area:" << std::endl;
             for (Card* card : currentPlayer->getPlayArea()) {
                 if (card != nullptr) {
-                    std::cout << "  " << card->toString() << std::endl;
+                    std::cout << "  " << card->toStringWithPoints() << std::endl;
                 }
             }
 
