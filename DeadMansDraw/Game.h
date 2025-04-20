@@ -26,5 +26,6 @@ public:
     Player* getCurrentPlayer() const;
     Player* getWinner() const;
     void addCardToDeck(Card* card);
+    const std::vector<Player*>& getPlayers() const;
 
 };

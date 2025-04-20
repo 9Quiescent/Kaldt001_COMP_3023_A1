@@ -119,6 +119,30 @@ void GameController::startGame() {
     }
 
     std::cout << "Game finished." << std::endl;
+    std::cout << "\nFinal Scores:" << std::endl;
+
+    const std::vector<Player*>& allPlayers = game->getPlayers();
+
+    for (Player* p : allPlayers) {
+        if (p != nullptr) {
+            int score = 0;
+            const std::vector<Card*>& bank = p->getBank();
+            for (Card* card : bank) {
+                if (card != nullptr)
+                    score += card->getPointValue();
+            }
+            std::cout << p->getName() << ": " << score << " points" << std::endl;
+        }
+    }
+
+    // Announce the winner
+    Player* winner = game->getWinner();
+    if (winner != nullptr) {
+        std::cout << "\nWinner is: " << winner->getName() << "!" << std::endl;
+    }
+    else {
+        std::cout << "\nIt's a tie!" << std::endl;
+    }
 }
 
 void GameController::promptPlayerAction()

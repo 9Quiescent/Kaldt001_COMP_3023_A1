@@ -143,6 +143,7 @@ Player* Game::getWinner() const
 
     Player* winner = players[0];
     int highestScore = 0;
+    bool tie = false;
 
     for (Player* player : players)
     {
@@ -157,8 +158,16 @@ Player* Game::getWinner() const
         {
             highestScore = score;
             winner = player;
+            tie = false; 
+        }
+        else if (score == highestScore && player != winner)
+        {
+            tie = true;
         }
     }
+
+    if (tie)
+        return nullptr; 
 
     return winner;
 }
@@ -168,4 +177,9 @@ void Game::addCardToDeck(Card* card)
     if (card != nullptr) {
         deck.push_back(card);
     }
+}
+
+const std::vector<Player*>& Game::getPlayers() const
+{
+    return players;
 }
