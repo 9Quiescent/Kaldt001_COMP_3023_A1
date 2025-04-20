@@ -188,7 +188,7 @@ bool GameController::HandleBust(Player* player)
                     else
                     {
                         std::cout << "BUST! " << player->getName() << " loses all cards in play area." << std::endl;
-                        player->resetPlayArea();
+                        game->discardPlayArea(*player);;
                         return true; // Bust did occur
                     }
                 }

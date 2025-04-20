@@ -8,6 +8,7 @@ class Game {
 private:
     std::vector<Player*> players;
     std::vector<Card*> deck;
+    std::vector<Card*> discardPile;
     int currentPlayerIndex;
     bool gameOver;
 
@@ -27,5 +28,6 @@ public:
     Player* getWinner() const;
     void addCardToDeck(Card* card);
     const std::vector<Player*>& getPlayers() const;
+    void discardPlayArea(Player& player);
 
 };

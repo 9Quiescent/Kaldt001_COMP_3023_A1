@@ -189,3 +189,15 @@ const std::vector<Player*>& Game::getPlayers() const
 {
     return players;
 }
+
+void Game::discardPlayArea(Player& player)
+{
+    const std::vector<Card*>& playArea = player.getPlayArea();
+    for (Card* card : playArea)
+    {
+        if (card != nullptr)
+            discardPile.push_back(card); // Cards go into their pile
+    }
+
+    player.resetPlayArea(); // The play area gets emptied out to simulate the cards changing positions.
+}
