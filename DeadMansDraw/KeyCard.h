@@ -2,9 +2,8 @@
 #include "Card.h"
 #include "KeyCardAbility.h"
 
-class KeyCard : public Card
-{
+class KeyCard : public Card {
 public:
-    KeyCard();
+    KeyCard(int pointValue);
     std::string toString() const;
 };

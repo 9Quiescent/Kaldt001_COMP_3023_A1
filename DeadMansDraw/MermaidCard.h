@@ -2,9 +2,8 @@
 #include "Card.h"
 #include "MermaidCardAbility.h"
 
-class MermaidCard : public Card
-{
+class MermaidCard : public Card {
 public:
-    MermaidCard();
+    MermaidCard(int pointValue);
     std::string toString() const;
 };

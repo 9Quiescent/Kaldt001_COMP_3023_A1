@@ -1,11 +1,10 @@
 #include "KeyCard.h"
 
-KeyCard::KeyCard()
-    : Card(Suit::Key, 7, new KeyCardAbility())
+KeyCard::KeyCard(int pointValue)
+    : Card(Suit::Key, pointValue, new KeyCardAbility())
 {
 }
 
-std::string KeyCard::toString() const
-{
+std::string KeyCard::toString() const {
     return "Key";
 }

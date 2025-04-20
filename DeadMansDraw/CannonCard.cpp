@@ -1,11 +1,10 @@
 #include "CannonCard.h"
 
-CannonCard::CannonCard()
-    : Card(Suit::Cannon, 5, new CannonCardAbility())
+CannonCard::CannonCard(int pointValue)
+    : Card(Suit::Cannon, pointValue, new CannonCardAbility())
 {
 }
 
-std::string CannonCard::toString() const
-{
+std::string CannonCard::toString() const {
     return "Cannon";
 }

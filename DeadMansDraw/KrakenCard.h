@@ -2,9 +2,8 @@
 #include "Card.h"
 #include "KrakenCardAbility.h"
 
-class KrakenCard : public Card
-{
+class KrakenCard : public Card {
 public:
-    KrakenCard();
+    KrakenCard(int pointValue);
     std::string toString() const;
 };

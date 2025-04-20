@@ -2,9 +2,8 @@
 #include "Card.h"
 #include "MapCardAbility.h"
 
-class MapCard : public Card
-{
+class MapCard : public Card {
 public:
-    MapCard();
+    MapCard(int pointValue);
     std::string toString() const;
 };

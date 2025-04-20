@@ -2,9 +2,8 @@
 #include "Card.h"
 #include "ChestCardAbility.h"
 
-class ChestCard : public Card
-{
+class ChestCard : public Card {
 public:
-    ChestCard();
+    ChestCard(int pointValue);
     std::string toString() const;
 };

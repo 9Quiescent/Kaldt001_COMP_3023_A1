@@ -2,9 +2,8 @@
 #include "Card.h"
 #include "SwordCardAbility.h"
 
-class SwordCard : public Card
-{
+class SwordCard : public Card {
 public:
-    SwordCard();
+    SwordCard(int pointValue);
     std::string toString() const;
 };

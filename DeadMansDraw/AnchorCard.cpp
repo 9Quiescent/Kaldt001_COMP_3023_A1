@@ -1,11 +1,10 @@
 #include "AnchorCard.h"
 
-AnchorCard::AnchorCard()
-    : Card(Suit::Anchor, 4, new AnchorCardAbility())
+AnchorCard::AnchorCard(int pointValue)
+    : Card(Suit::Anchor, pointValue, new AnchorCardAbility())
 {
 }
 
-std::string AnchorCard::toString() const
-{
+std::string AnchorCard::toString() const {
     return "Anchor";
 }

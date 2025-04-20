@@ -5,17 +5,14 @@ Card::Card(Suit suit, int pointValue, ICardAbility* ability)
 {
 }
 
-Card::~Card()
-{
+Card::~Card() {
     delete ability;
 }
 
-Suit Card::getSuit() const
-{
+Suit Card::getSuit() const {
     return suit;
 }
 
-int Card::getPointValue() const
-{
+int Card::getPointValue() const {
     return pointValue;
 }

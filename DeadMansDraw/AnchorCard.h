@@ -2,9 +2,8 @@
 #include "Card.h"
 #include "AnchorCardAbility.h"
 
-class AnchorCard : public Card
-{
+class AnchorCard : public Card {
 public:
-    AnchorCard();
+    AnchorCard(int pointValue);
     std::string toString() const;
 };

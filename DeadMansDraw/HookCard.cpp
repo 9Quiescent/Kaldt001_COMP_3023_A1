@@ -1,11 +1,10 @@
 #include "HookCard.h"
 
-HookCard::HookCard()
-    : Card(Suit::Hook, 5, new HookCardAbility())
+HookCard::HookCard(int pointValue)
+    : Card(Suit::Hook, pointValue, new HookCardAbility())
 {
 }
 
-std::string HookCard::toString() const
-{
+std::string HookCard::toString() const {
     return "Hook";
 }

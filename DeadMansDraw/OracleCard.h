@@ -2,9 +2,8 @@
 #include "Card.h"
 #include "OracleCardAbility.h"
 
-class OracleCard : public Card
-{
+class OracleCard : public Card {
 public:
-    OracleCard();
+    OracleCard(int pointValue);
     std::string toString() const;
 };

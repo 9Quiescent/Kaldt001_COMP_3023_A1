@@ -2,9 +2,8 @@
 #include "Card.h"
 #include "HookCardAbility.h"
 
-class HookCard : public Card
-{
+class HookCard : public Card {
 public:
-    HookCard();
+    HookCard(int pointValue);
     std::string toString() const;
 };

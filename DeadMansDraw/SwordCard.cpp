@@ -1,11 +1,10 @@
 #include "SwordCard.h"
 
-SwordCard::SwordCard()
-    : Card(Suit::Sword, 6, new SwordCardAbility())
+SwordCard::SwordCard(int pointValue)
+    : Card(Suit::Sword, pointValue, new SwordCardAbility())
 {
 }
 
-std::string SwordCard::toString() const
-{
+std::string SwordCard::toString() const {
     return "Sword";
 }

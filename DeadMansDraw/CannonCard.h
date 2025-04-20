@@ -2,9 +2,8 @@
 #include "Card.h"
 #include "CannonCardAbility.h"
 
-class CannonCard : public Card
-{
+class CannonCard : public Card {
 public:
-    CannonCard();
+    CannonCard(int pointValue);
     std::string toString() const;
 };

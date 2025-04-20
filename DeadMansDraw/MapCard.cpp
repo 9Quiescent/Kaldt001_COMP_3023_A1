@@ -1,11 +1,10 @@
 #include "MapCard.h"
 
-MapCard::MapCard()
-    : Card(Suit::Map, 5, new MapCardAbility())
+MapCard::MapCard(int pointValue)
+    : Card(Suit::Map, pointValue, new MapCardAbility())
 {
 }
 
-std::string MapCard::toString() const
-{
+std::string MapCard::toString() const {
     return "Map";
 }

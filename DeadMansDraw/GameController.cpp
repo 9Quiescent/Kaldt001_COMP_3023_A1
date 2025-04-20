@@ -1,6 +1,8 @@
 #include "GameController.h"
 
-GameController::GameController() {
+GameController::GameController()
+    : game(nullptr), playerController(nullptr) 
+{
     // I'm going to setup the GameController here
 }
 

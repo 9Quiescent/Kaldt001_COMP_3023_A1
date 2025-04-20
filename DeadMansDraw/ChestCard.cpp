@@ -1,11 +1,10 @@
 #include "ChestCard.h"
 
-ChestCard::ChestCard()
-    : Card(Suit::Chest, 6, new ChestCardAbility())
+ChestCard::ChestCard(int pointValue)
+    : Card(Suit::Chest, pointValue, new ChestCardAbility())
 {
 }
 
-std::string ChestCard::toString() const
-{
+std::string ChestCard::toString() const {
     return "Chest";
 }

@@ -1,11 +1,10 @@
 #include "OracleCard.h"
 
-OracleCard::OracleCard()
-    : Card(Suit::Oracle, 3, new OracleCardAbility())
+OracleCard::OracleCard(int pointValue)
+    : Card(Suit::Oracle, pointValue, new OracleCardAbility())
 {
 }
 
-std::string OracleCard::toString() const
-{
+std::string OracleCard::toString() const {
     return "Oracle";
 }
