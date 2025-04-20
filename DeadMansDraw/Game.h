@@ -1,23 +1,30 @@
 #pragma once
 
 #include <vector>
-#include "Card.h"
 #include "Player.h"
+#include "Card.h"
 
 class Game {
 private:
-    std::vector<Card*> deck;
-    std::vector<Card*> discardPile;
     std::vector<Player*> players;
+    std::vector<Card*> deck;
     int currentPlayerIndex;
+    bool gameOver;
 
 public:
     Game();
     ~Game();
 
-    void start();
-    void nextPlayer();
     void addPlayer(Player* player);
+    void start();
+    void nextTurn();
     Card* drawCard();
-    void discardCard(Card* card);
+    void bankCards(Player& player);
+    bool checkBust(const Player& player) const;
+    void printBank(Player* player) const;
+    bool isDeckEmpty() const;
+    Player* getCurrentPlayer() const;
+    Player* getWinner() const;
+    void addCardToDeck(Card* card);
+
 };

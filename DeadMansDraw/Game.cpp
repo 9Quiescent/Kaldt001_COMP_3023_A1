@@ -1,81 +1,125 @@
 #include "Game.h"
-#include "CannonCard.h"
-#include "ChestCard.h"
-#include "KeyCard.h"
-#include "SwordCard.h"
-#include "HookCard.h"
-#include "AnchorCard.h"
-#include "MapCard.h"
-#include "MermaidCard.h"
-#include "KrakenCard.h"
-#include "OracleCard.h"
-
-#include <algorithm> 
-#include <iostream> 
+#include <iostream>
 
 Game::Game()
-    : currentPlayerIndex(0) // Gonna initialise it here
+    : currentPlayerIndex(0), gameOver(false)
 {
-    // I'm going to setup the starting state here
+    // I'm going to initialize the game here
 }
 
 Game::~Game()
 {
-    // I'm going to clean up dynamic memory here
-}
-
-void Game::start()
-{
-    // Create all cards and push into deck
-    deck.push_back(new CannonCard(2));
-    deck.push_back(new ChestCard(2));
-    deck.push_back(new KeyCard(2));
-    deck.push_back(new SwordCard(2));
-    deck.push_back(new HookCard(2));
-    deck.push_back(new AnchorCard(2));
-    deck.push_back(new MapCard(2));
-    deck.push_back(new MermaidCard(2));
-    deck.push_back(new KrakenCard(2));
-    deck.push_back(new OracleCard(2));
-    /*
-    * // Print pre shuffle
-    std::cout << "Before shuffle:" << std::endl;
     for (Card* card : deck) {
-        std::cout << card->toString() << std::endl;
+        delete card;
     }
-
-    //Sep prints with newline
-    std::cout << std::endl;
-
-    // Shuffle the pre shuffle
-    std::random_shuffle(deck.begin(), deck.end());
-
-    // Print the after shuffle
-    std::cout << "After shuffle:" << std::endl;
-    for (Card* card : deck) {
-        std::cout << card->toString() << std::endl;
+    for (Player* player : players) {
+        delete player;
     }
-    */
-    
-}
-
-void Game::nextPlayer()
-{
-    // I'm going to implement the player switching logic here
 }
 
 void Game::addPlayer(Player* player)
 {
-    // I'm going to add a player here
+    players.push_back(player);
+}
+
+void Game::start()
+{
+    std::cout << "Game::start() called" << std::endl;
+    
+}
+
+void Game::nextTurn()
+{
+    currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
 }
 
 Card* Game::drawCard()
 {
-    // I'm going to draw a card here
-    return nullptr;
+    if (deck.empty())
+    {
+        std::cout << "Warning: Deck is empty, cannot draw a card." << std::endl;
+        return nullptr;
+    }
+
+    Card* card = deck.back();
+    deck.pop_back();
+    return card;
 }
 
-void Game::discardCard(Card* card)
+void Game::bankCards(Player& player)
 {
-    // I'm going to discard a card here
+    std::cout << "Game::bankCards() called" << std::endl;
+    player.bankPlayArea();
+}
+
+bool Game::checkBust(const Player& player) const
+{
+    std::cout << "Game::checkBust() called" << std::endl;
+    
+    return false;
+}
+
+void Game::printBank(Player* player) const
+{
+    if (player == nullptr) return;
+
+    const std::vector<Card*>& bank = player->getBank();
+
+    std::cout << player->getName() << "'s Bank:" << std::endl;
+    if (bank.empty())
+    {
+        std::cout << "  (empty)" << std::endl;
+    }
+    else
+    {
+        for (Card* card : bank)
+        {
+            if (card != nullptr)
+                std::cout << "  " << card->toString() << std::endl;
+        }
+    }
+}
+
+bool Game::isDeckEmpty() const
+{
+    return deck.empty();
+}
+
+Player* Game::getCurrentPlayer() const
+{
+    if (players.empty()) return nullptr;
+    return players[currentPlayerIndex];
+}
+
+Player* Game::getWinner() const
+{
+    if (players.empty()) return nullptr;
+
+    Player* winner = players[0];
+    int highestScore = 0;
+
+    for (Player* player : players)
+    {
+        int score = 0;
+        for (Card* card : player->getBank())
+        {
+            if (card != nullptr)
+                score += card->getPointValue();
+        }
+
+        if (score > highestScore)
+        {
+            highestScore = score;
+            winner = player;
+        }
+    }
+
+    return winner;
+}
+
+void Game::addCardToDeck(Card* card)
+{
+    if (card != nullptr) {
+        deck.push_back(card);
+    }
 }
