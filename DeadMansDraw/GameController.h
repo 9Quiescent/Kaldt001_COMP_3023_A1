@@ -15,4 +15,7 @@ public:
 
     void startGame();
     void promptPlayerAction();
+
+private:
+    bool HandleBust(Player* player);
 };

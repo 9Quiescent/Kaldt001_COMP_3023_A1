@@ -84,9 +84,7 @@ void GameController::startGame() {
             }
 
             // Check for bust
-            if (game->checkBust(*currentPlayer)) {
-                std::cout << "BUST! " << currentPlayer->getName() << " loses all cards in play area." << std::endl;
-                currentPlayer->resetPlayArea();
+            if (HandleBust(currentPlayer)) {
                 turnOver = true;
                 break;
             }
@@ -149,3 +147,56 @@ void GameController::promptPlayerAction()
 {
     // I'm going to ask the player what action they want to take here
 }
+
+bool GameController::HandleBust(Player* player)
+{
+    const std::vector<Card*>& playArea = player->getPlayArea();
+    std::vector<Suit> seenSuits;
+    bool hasAnchor = false;
+
+    for (Card* card : playArea)
+    {
+        if (card == nullptr) continue;
+
+        Suit suit = card->getSuit();
+        if (suit == Suit::Anchor)
+        {
+            hasAnchor = true;
+        }
+        else
+        {
+            for (Suit s : seenSuits)
+            {
+                if (s == suit)
+                {
+                    if (hasAnchor)
+                    {
+                        std::cout << "Anchor prevents bust (Anchor present)!" << std::endl;
+
+                        // Look around for the anchor, activate its ability
+                        for (Card* c : playArea)
+                        {
+                            if (c != nullptr && c->getSuit() == Suit::Anchor)
+                            {
+                                c->play(*player); // This activates the anchor ability (apply), from the anchor card that composes it
+                                break; 
+                            }
+                        }
+
+                        return false; // Bust didn't occur
+                    }
+                    else
+                    {
+                        std::cout << "BUST! " << player->getName() << " loses all cards in play area." << std::endl;
+                        player->resetPlayArea();
+                        return true; // Bust did occur
+                    }
+                }
+            }
+            seenSuits.push_back(suit);
+        }
+    }
+
+    return false; // No bust detected
+}
+

@@ -75,7 +75,8 @@ void Game::bankCards(Player& player)
 bool Game::checkBust(const Player& player) const
 {
     const std::vector<Card*>& playArea = player.getPlayArea();
-    std::vector<Suit> seenSuits; 
+    bool hasAnchor = false;
+    std::vector<Suit> seenSuits;
 
     for (Card* card : playArea)
     {
@@ -83,27 +84,32 @@ bool Game::checkBust(const Player& player) const
 
         Suit suit = card->getSuit();
 
-        bool duplicateFound = false;
+        if (suit == Suit::Anchor)
+            hasAnchor = true;
+
         for (Suit s : seenSuits)
         {
             if (s == suit)
             {
-                duplicateFound = true;
-                break;
+                if (hasAnchor)
+                {
+                    std::cout << "Anchor prevents bust (Anchor present)!" << std::endl;
+                    return false; // Whenever they are saved from embarrassment by the anchor
+                }
+                else
+                {
+                    return true; // When there is no anchor to save them
+                }
             }
-        }
-
-        if (duplicateFound)
-        {
-            // Duplicate suit found, so now the player just busts and explodes
-            return true;
         }
 
         seenSuits.push_back(suit);
     }
 
-    return false; // No duplicates, safe for now
+    return false; // Bust doesn't happen
 }
+
+
 
 void Game::printBank(Player* player) const
 {
