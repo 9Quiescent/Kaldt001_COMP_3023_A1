@@ -1,6 +1,12 @@
 #include "SwordCardAbility.h"
+#include <iostream>
 
-void SwordCardAbility::apply(Game& game, Player& player)
+void SwordCardAbility::apply(Card& card, Player& player)
 {
-    // I'm going to put the Sword ability effect here.
+    // I'm going to apply the Sword ability to the player here
+}
+
+std::string SwordCardAbility::toString() const
+{
+    return "Sword Ability";
 }

@@ -1,6 +1,12 @@
 #include "KeyCardAbility.h"
+#include <iostream>
 
-void KeyCardAbility::apply(Game& game, Player& player)
+void KeyCardAbility::apply(Card& card, Player& player)
 {
-    // I'm going to put the Key ability effect here.
+    // I'm going to apply the Key ability to the player here
+}
+
+std::string KeyCardAbility::toString() const
+{
+    return "Key Ability";
 }

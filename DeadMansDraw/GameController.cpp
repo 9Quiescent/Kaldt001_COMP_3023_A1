@@ -24,6 +24,8 @@ void GameController::startGame()
     game->addPlayer(player2);
 
     std::cout << "Game setup complete. Two players ready!" << std::endl; //Doing a sanity check here....
+
+    game->start();
 }
 
 void GameController::promptPlayerAction() {

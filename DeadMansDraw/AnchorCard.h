@@ -1,9 +1,12 @@
 #pragma once
 #include "Card.h"
 #include "AnchorCardAbility.h"
+#include "Player.h"
 
 class AnchorCard : public Card {
 public:
     AnchorCard(int pointValue);
-    std::string toString() const;
+    ~AnchorCard();
+    std::string toString() const override;
+    void play(Player& player) override;
 };

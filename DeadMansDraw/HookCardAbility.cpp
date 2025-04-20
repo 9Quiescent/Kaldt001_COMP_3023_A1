@@ -1,6 +1,12 @@
 #include "HookCardAbility.h"
+#include <iostream>
 
-void HookCardAbility::apply(Game& game, Player& player)
+void HookCardAbility::apply(Card& card, Player& player)
 {
-    // I'm going to put the Hook ability effect here.
+    // I'm going to apply the Hook ability to the player here
+}
+
+std::string HookCardAbility::toString() const
+{
+    return "Hook Ability";
 }

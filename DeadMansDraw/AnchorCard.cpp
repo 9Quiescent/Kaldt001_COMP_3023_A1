@@ -5,6 +5,17 @@ AnchorCard::AnchorCard(int pointValue)
 {
 }
 
-std::string AnchorCard::toString() const {
+AnchorCard::~AnchorCard()
+{
+    
+}
+
+std::string AnchorCard::toString() const
+{
     return "Anchor";
+}
+
+void AnchorCard::play(Player& player)
+{
+    ability->apply(static_cast<Card&>(*this), player);
 }

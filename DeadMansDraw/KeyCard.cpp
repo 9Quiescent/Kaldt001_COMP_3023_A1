@@ -5,6 +5,17 @@ KeyCard::KeyCard(int pointValue)
 {
 }
 
-std::string KeyCard::toString() const {
+KeyCard::~KeyCard()
+{
+    
+}
+
+std::string KeyCard::toString() const
+{
     return "Key";
+}
+
+void KeyCard::play(Player& player)
+{
+    ability->apply(static_cast<Card&>(*this), player);
 }

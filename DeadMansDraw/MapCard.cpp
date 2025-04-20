@@ -5,6 +5,17 @@ MapCard::MapCard(int pointValue)
 {
 }
 
-std::string MapCard::toString() const {
+MapCard::~MapCard()
+{
+    
+}
+
+std::string MapCard::toString() const
+{
     return "Map";
+}
+
+void MapCard::play(Player& player)
+{
+    ability->apply(static_cast<Card&>(*this), player);
 }

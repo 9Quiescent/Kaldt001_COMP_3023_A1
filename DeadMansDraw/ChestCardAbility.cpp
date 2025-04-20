@@ -1,6 +1,12 @@
 #include "ChestCardAbility.h"
+#include <iostream>
 
-void ChestCardAbility::apply(Game& game, Player& player)
+void ChestCardAbility::apply(Card& card, Player& player)
 {
-    // I'm going to put the Chest ability effect here.
+    // I'm going to apply the Chest ability to the player here
+}
+
+std::string ChestCardAbility::toString() const
+{
+    return "Chest Ability";
 }

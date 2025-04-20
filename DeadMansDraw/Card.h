@@ -3,6 +3,8 @@
 #include "ICardAbility.h"
 #include <string>
 
+class Player;
+
 class Card {
 protected:
     int pointValue;
@@ -17,5 +19,5 @@ public:
     int getPointValue() const;
 
     virtual std::string toString() const = 0;
-    virtual void play() = 0;
+    virtual void play(Player& player) = 0;
 };

@@ -1,6 +1,12 @@
 #include "KrakenCardAbility.h"
+#include <iostream>
 
-void KrakenCardAbility::apply(Game& game, Player& player)
+void KrakenCardAbility::apply(Card& card, Player& player)
 {
-    // I'm going to put the Kraken ability effect here.
+    // I'm going to apply the Kraken ability to the player here
+}
+
+std::string KrakenCardAbility::toString() const
+{
+    return "Kraken Ability";
 }

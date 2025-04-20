@@ -1,11 +1,13 @@
 #pragma once
 
-class Player;
-class Game;
+#include <string>
 
-class ICardAbility
-{
+class Player;
+class Card;
+
+class ICardAbility {
 public:
     virtual ~ICardAbility() = default;
-    virtual void apply(Game& game, Player& player) = 0;
+    virtual void apply(Card& card, Player& player) = 0;
+    virtual std::string toString() const = 0;
 };

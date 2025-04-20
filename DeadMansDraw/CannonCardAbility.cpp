@@ -1,6 +1,12 @@
 #include "CannonCardAbility.h"
+#include <iostream>
 
-void CannonCardAbility::apply(Game& game, Player& player)
+void CannonCardAbility::apply(Card& card, Player& player)
 {
-    // I'm going to put the Cannon ability effect here.
+    // I'm going to apply the Cannon ability to the player here
+}
+
+std::string CannonCardAbility::toString() const
+{
+    return "Cannon Ability";
 }

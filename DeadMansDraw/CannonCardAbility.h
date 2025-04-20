@@ -1,8 +1,8 @@
 #pragma once
 #include "ICardAbility.h"
 
-class CannonCardAbility : public ICardAbility
-{
+class CannonCardAbility : public ICardAbility {
 public:
-    void apply(Game& game, Player& player);
+    void apply(Card& card, Player& player) override;
+    std::string toString() const override;
 };

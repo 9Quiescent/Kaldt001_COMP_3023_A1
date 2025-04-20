@@ -5,6 +5,17 @@ KrakenCard::KrakenCard(int pointValue)
 {
 }
 
-std::string KrakenCard::toString() const {
+KrakenCard::~KrakenCard()
+{
+    
+}
+
+std::string KrakenCard::toString() const
+{
     return "Kraken";
+}
+
+void KrakenCard::play(Player& player)
+{
+    ability->apply(static_cast<Card&>(*this), player);
 }

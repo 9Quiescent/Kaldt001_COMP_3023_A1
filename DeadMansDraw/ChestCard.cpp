@@ -5,6 +5,17 @@ ChestCard::ChestCard(int pointValue)
 {
 }
 
-std::string ChestCard::toString() const {
+ChestCard::~ChestCard()
+{
+    
+}
+
+std::string ChestCard::toString() const
+{
     return "Chest";
+}
+
+void ChestCard::play(Player& player)
+{
+    ability->apply(static_cast<Card&>(*this), player);
 }
