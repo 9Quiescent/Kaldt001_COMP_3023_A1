@@ -7,7 +7,6 @@ KeyCard::KeyCard(int pointValue)
 
 KeyCard::~KeyCard()
 {
-    
 }
 
 std::string KeyCard::toString() const
@@ -15,7 +14,8 @@ std::string KeyCard::toString() const
     return "Key";
 }
 
-void KeyCard::play(Player& player)
+void KeyCard::play(Player& player, Game& game)
 {
-    ability->apply(static_cast<Card&>(*this), player);
+    if (ability)
+        ability->apply(*this, player);
 }

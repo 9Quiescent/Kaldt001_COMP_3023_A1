@@ -7,7 +7,6 @@ MermaidCard::MermaidCard(int pointValue)
 
 MermaidCard::~MermaidCard()
 {
-    
 }
 
 std::string MermaidCard::toString() const
@@ -15,7 +14,8 @@ std::string MermaidCard::toString() const
     return "Mermaid";
 }
 
-void MermaidCard::play(Player& player)
+void MermaidCard::play(Player& player, Game& game)
 {
-    ability->apply(static_cast<Card&>(*this), player);
+    if (ability)
+        ability->apply(*this, player);
 }

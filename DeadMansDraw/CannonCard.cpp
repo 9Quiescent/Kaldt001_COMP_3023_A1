@@ -7,7 +7,6 @@ CannonCard::CannonCard(int pointValue)
 
 CannonCard::~CannonCard()
 {
-    
 }
 
 std::string CannonCard::toString() const
@@ -15,7 +14,8 @@ std::string CannonCard::toString() const
     return "Cannon";
 }
 
-void CannonCard::play(Player& player)
+void CannonCard::play(Player& player, Game& game)
 {
-    ability->apply(static_cast<Card&>(*this), player);
+    if (ability)
+        ability->apply(*this, player);
 }

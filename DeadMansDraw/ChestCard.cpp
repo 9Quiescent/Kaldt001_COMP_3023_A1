@@ -7,7 +7,6 @@ ChestCard::ChestCard(int pointValue)
 
 ChestCard::~ChestCard()
 {
-    
 }
 
 std::string ChestCard::toString() const
@@ -15,7 +14,8 @@ std::string ChestCard::toString() const
     return "Chest";
 }
 
-void ChestCard::play(Player& player)
+void ChestCard::play(Player& player, Game& game)
 {
-    ability->apply(static_cast<Card&>(*this), player);
+    if (ability)
+        ability->apply(*this, player);
 }

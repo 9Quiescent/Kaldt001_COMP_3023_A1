@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <vector>
 #include "Player.h"
@@ -29,5 +29,7 @@ public:
     void addCardToDeck(Card* card);
     const std::vector<Player*>& getPlayers() const;
     void discardPlayArea(Player& player);
-
+    bool handleBust(Player& player);
+    void printFinalScores() const;
+    void shuffleDeck();
 };

@@ -1,9 +1,11 @@
 #pragma once
+
 #include "Suit.h"
 #include "ICardAbility.h"
 #include <string>
 
 class Player;
+class Game;
 
 class Card {
 protected:
@@ -14,11 +16,10 @@ protected:
 public:
     Card(Suit suit, int pointValue, ICardAbility* ability);
     virtual ~Card();
-
     Suit getSuit() const;
     int getPointValue() const;
-
     virtual std::string toString() const = 0;
     virtual std::string toStringWithPoints() const;
-    virtual void play(Player& player) = 0;
+    virtual void play(Player& player, Game& game) = 0;
+    virtual void willAddToBank(Game& game, Player& player) {}
 };

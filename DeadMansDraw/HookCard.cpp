@@ -7,7 +7,6 @@ HookCard::HookCard(int pointValue)
 
 HookCard::~HookCard()
 {
-    
 }
 
 std::string HookCard::toString() const
@@ -15,7 +14,8 @@ std::string HookCard::toString() const
     return "Hook";
 }
 
-void HookCard::play(Player& player)
+void HookCard::play(Player& player, Game& game)
 {
-    ability->apply(static_cast<Card&>(*this), player);
+    if (ability)
+        ability->apply(*this, player);
 }

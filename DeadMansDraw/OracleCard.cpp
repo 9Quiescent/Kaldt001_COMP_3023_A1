@@ -7,7 +7,6 @@ OracleCard::OracleCard(int pointValue)
 
 OracleCard::~OracleCard()
 {
-   
 }
 
 std::string OracleCard::toString() const
@@ -15,7 +14,8 @@ std::string OracleCard::toString() const
     return "Oracle";
 }
 
-void OracleCard::play(Player& player)
+void OracleCard::play(Player& player, Game& game)
 {
-    ability->apply(static_cast<Card&>(*this), player);
+    if (ability)
+        ability->apply(*this, player);
 }

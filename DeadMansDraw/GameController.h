@@ -12,10 +12,6 @@ private:
 public:
     GameController();
     ~GameController();
-
     void startGame();
-    void promptPlayerAction();
-
-private:
-    bool HandleBust(Player* player);
+    void promptPlayerAction(); 
 };

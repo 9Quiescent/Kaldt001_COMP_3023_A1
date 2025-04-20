@@ -7,7 +7,6 @@ SwordCard::SwordCard(int pointValue)
 
 SwordCard::~SwordCard()
 {
-   
 }
 
 std::string SwordCard::toString() const
@@ -15,7 +14,8 @@ std::string SwordCard::toString() const
     return "Sword";
 }
 
-void SwordCard::play(Player& player)
+void SwordCard::play(Player& player, Game& game)
 {
-    ability->apply(static_cast<Card&>(*this), player);
+    if (ability)
+        ability->apply(*this, player);
 }
