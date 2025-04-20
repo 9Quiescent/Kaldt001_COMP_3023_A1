@@ -10,8 +10,20 @@ GameController::~GameController() {
     // I'm going to clean up the GameController here
 }
 
-void GameController::startGame() {
-    // I'm going to start the game here
+void GameController::startGame()
+{
+    game = new Game();
+    playerController = new HumanPlayerController();
+
+    // Create two players
+    Player* player1 = new Player("Player 1");
+    Player* player2 = new Player("Player 2");
+
+    // Add players to the game
+    game->addPlayer(player1);
+    game->addPlayer(player2);
+
+    std::cout << "Game setup complete. Two players ready!" << std::endl; //Doing a sanity check here....
 }
 
 void GameController::promptPlayerAction() {

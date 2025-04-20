@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "HumanPlayerController.h"
+#include <iostream>
 
 class GameController {
 private:

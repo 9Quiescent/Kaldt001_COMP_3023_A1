@@ -1,23 +1,25 @@
 #include "Player.h"
 
-Player::Player() {
-    // I'm going to put Player initialization logic here
+Player::Player(const std::string& name)
+    : name(name)
+{
+    // I'm going to initialise the bank and playArea vectors here
 }
 
 Player::~Player() {
-    // I'm going to put Player memory cleanup logic here
+    // I'm going to clean up any dynamic memory here if needed
 }
 
 void Player::addToPlayArea(Card* card) {
-    // I'm going to put logic to add a Card to the play area here
+    // I'm going to add the card to the play area here
 }
 
 void Player::bankPlayArea() {
-    // I'm going to put logic to move play area Cards to bank here
+    // I'm going to bank the play area cards here
 }
 
 void Player::resetPlayArea() {
-    // I'm going to put logic to clear the play area here
+    // I'm going to reset the play area here
 }
 
 const std::vector<Card*>& Player::getBank() const {
@@ -26,4 +28,8 @@ const std::vector<Card*>& Player::getBank() const {
 
 const std::vector<Card*>& Player::getPlayArea() const {
     return playArea;
+}
+
+std::string Player::getName() const {
+    return name;
 }

@@ -1,6 +1,7 @@
 #include "GameController.h"
 
 int main() {
-    // And starting teh game goes here.
+    GameController controller;
+    controller.startGame();
     return 0;
 }
