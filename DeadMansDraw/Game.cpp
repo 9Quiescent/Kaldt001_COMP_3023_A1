@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <iostream>
+#include <vector>
 
 Game::Game()
     : currentPlayerIndex(0), gameOver(false)
@@ -54,9 +55,36 @@ void Game::bankCards(Player& player)
 
 bool Game::checkBust(const Player& player) const
 {
-    std::cout << "Game::checkBust() called" << std::endl;
-    
-    return false;
+    const std::vector<Card*>& playArea = player.getPlayArea();
+    std::vector<Suit> seenSuits; // Using vector instead of set
+
+    for (Card* card : playArea)
+    {
+        if (card == nullptr) continue;
+
+        Suit suit = card->getSuit();
+
+        // Linear search: check if suit was already seen
+        bool duplicateFound = false;
+        for (Suit s : seenSuits)
+        {
+            if (s == suit)
+            {
+                duplicateFound = true;
+                break;
+            }
+        }
+
+        if (duplicateFound)
+        {
+            // Duplicate suit found, player busts
+            return true;
+        }
+
+        seenSuits.push_back(suit);
+    }
+
+    return false; // No duplicates, safe
 }
 
 void Game::printBank(Player* player) const

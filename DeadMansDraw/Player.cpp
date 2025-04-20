@@ -11,15 +11,22 @@ Player::~Player() {
 }
 
 void Player::addToPlayArea(Card* card) {
-    // I'm going to add the card to the play area here
+    if (card != nullptr) {
+        playArea.push_back(card);
+    }
 }
 
 void Player::bankPlayArea() {
-    // I'm going to bank the play area cards here
+    for (Card* card : playArea) {
+        if (card != nullptr) {
+            bank.push_back(card);
+        }
+    }
+    playArea.clear();
 }
 
 void Player::resetPlayArea() {
-    // I'm going to reset the play area here
+    playArea.clear(); // Ownage stays stays with Game, don't have to delete here
 }
 
 const std::vector<Card*>& Player::getBank() const {
