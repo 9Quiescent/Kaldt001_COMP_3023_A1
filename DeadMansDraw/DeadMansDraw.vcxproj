@@ -75,6 +75,7 @@
     <ClInclude Include="MapCard.h" />
     <ClInclude Include="MapCardAbility.h" />
     <ClInclude Include="MermaidCard.h" />
+    <ClInclude Include="MermaidCardAbility.h" />
     <ClInclude Include="OracleCard.h" />
     <ClInclude Include="OracleCardAbility.h" />
     <ClInclude Include="Player.h" />

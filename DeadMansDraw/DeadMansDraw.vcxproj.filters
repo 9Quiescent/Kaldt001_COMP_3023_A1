@@ -176,5 +176,8 @@
     <ClInclude Include="AnchorCardAbility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MermaidCardAbility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

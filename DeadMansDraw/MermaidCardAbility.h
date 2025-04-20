@@ -1,7 +1,7 @@
 #pragma once
 #include "ICardAbility.h"
 
-class ChestCardAbility : public ICardAbility
+class MermaidCardAbility : public ICardAbility
 {
 public:
     void apply(Game& game, Player& player);
