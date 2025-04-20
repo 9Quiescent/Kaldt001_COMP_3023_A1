@@ -49,14 +49,33 @@ Card* Game::drawCard()
 
 void Game::bankCards(Player& player)
 {
-    std::cout << "Game::bankCards() called" << std::endl;
-    player.bankPlayArea();
+    const std::vector<Card*>& playArea = player.getPlayArea();
+
+    if (playArea.empty()) {
+        std::cout << "No cards to bank." << std::endl;
+        return;
+    }
+
+    std::cout << "Added ";
+
+    for (size_t i = 0; i < playArea.size(); ++i) {
+        if (playArea[i] != nullptr)
+        {
+            std::cout << playArea[i]->toString();
+            if (i != playArea.size() - 1)
+                std::cout << ", ";
+        }
+    }
+
+    std::cout << " to your bank." << std::endl;
+
+    player.bankPlayArea(); // Cards might actually move around now hey?
 }
 
 bool Game::checkBust(const Player& player) const
 {
     const std::vector<Card*>& playArea = player.getPlayArea();
-    std::vector<Suit> seenSuits; // Using vector instead of set
+    std::vector<Suit> seenSuits; 
 
     for (Card* card : playArea)
     {
@@ -64,7 +83,6 @@ bool Game::checkBust(const Player& player) const
 
         Suit suit = card->getSuit();
 
-        // Linear search: check if suit was already seen
         bool duplicateFound = false;
         for (Suit s : seenSuits)
         {
@@ -77,14 +95,14 @@ bool Game::checkBust(const Player& player) const
 
         if (duplicateFound)
         {
-            // Duplicate suit found, player busts
+            // Duplicate suit found, so now the player just busts and explodes
             return true;
         }
 
         seenSuits.push_back(suit);
     }
 
-    return false; // No duplicates, safe
+    return false; // No duplicates, safe for now
 }
 
 void Game::printBank(Player* player) const
