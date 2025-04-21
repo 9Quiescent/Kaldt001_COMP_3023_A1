@@ -409,3 +409,15 @@ Card* Game::drawFromDiscardPile()
     return card;
 }
 
+Card* Game::removeFromDiscardPileAt(int index)
+{
+    if (index < 0 || static_cast<size_t>(index) >= discardPile.size())
+    {
+        return nullptr;
+    }
+
+    Card* card = discardPile[index];
+    discardPile.erase(discardPile.begin() + index);
+    return card;
+}
+

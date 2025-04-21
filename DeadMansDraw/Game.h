@@ -36,5 +36,6 @@ public:
     const std::vector<Card*>& getDeck() const;
     void addToDiscardPile(Card* card);
     Card* drawFromDiscardPile();
+    Card* removeFromDiscardPileAt(int index);
 
 };
