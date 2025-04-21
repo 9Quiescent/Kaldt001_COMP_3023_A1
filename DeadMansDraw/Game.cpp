@@ -398,3 +398,14 @@ void Game::addToDiscardPile(Card* card)
     }
 }
 
+Card* Game::drawFromDiscardPile()
+{
+    if (discardPile.empty()) {
+        return nullptr;
+    }
+
+    Card* card = discardPile.back();
+    discardPile.pop_back();
+    return card;
+}
+
