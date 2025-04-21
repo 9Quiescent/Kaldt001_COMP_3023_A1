@@ -43,7 +43,19 @@ void Game::addPlayer(Player* player)
 
 void Game::start()
 {
-    std::cout << "Starting Game..." << std::endl;
+    std::cout << R"(______                  _   ___  ___              _
+|  _  \                | |  |  \/  |             ( )
+| | | | ___   __ _   __| |  | .  . |  __ _  _ __ |/ ___
+| | | |/ _ \ / _` | / _` |  | |\/| | / _` || '_ \  / __|
+| |/ /|  __/| (_| || (_| |  | |  | || (_| || | | | \__ \
+|___/  \___| \__,_| \__,_|  \_|  |_/ \__,_||_| |_| |___/
+|  _  \                         _      _
+| | | | _ __  __ _ __      __ _| |_  _| |_
+| | | || '__|/ _` |\ \ /\ / /|_   _||_   _|
+| |/ / | |  | (_| | \ V  V /   |_|    |_|
+|___/  |_|   \__,_|  \_/\_/)" << std::endl;
+
+    std::cout << "\nStarting Dead Man's Draw++!" << std::endl;
 
     for (int i = 0; i < 6; ++i) {
         addCardToDeck(new AnchorCard(5));
@@ -248,7 +260,7 @@ bool Game::handleBust(Player& player)
             for (size_t j = 0; j < seenSuits.size(); ++j) {
                 if (seenSuits[j] == suit) {
                     if (hasAnchor) {
-                        std::cout << "Anchor prevents bust (Anchor present)!" << std::endl;
+                        std::cout << "Anchor prevents bust!" << std::endl;
                         for (size_t k = 0; k < playArea.size(); ++k) {
                             if (playArea[k] != nullptr && playArea[k]->getSuit() == Suit::Anchor) {
                                 playArea[k]->play(player, *this);
