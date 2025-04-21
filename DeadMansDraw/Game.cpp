@@ -9,6 +9,7 @@
 #include "MermaidCard.h"
 #include "OracleCard.h"
 #include "SwordCard.h"
+#include "Player.h"
 #include <iostream>
 #include <algorithm>
 #include <random>
@@ -21,14 +22,14 @@ Game::Game()
 
 Game::~Game()
 {
-    for (Card* card : deck) {
-        delete card;
+    for (size_t i = 0; i < deck.size(); ++i) {
+        delete deck[i];
     }
-    for (Card* card : discardPile) {
-        delete card;
+    for (size_t i = 0; i < discardPile.size(); ++i) {
+        delete discardPile[i];
     }
-    for (Player* player : players) {
-        delete player;
+    for (size_t i = 0; i < players.size(); ++i) {
+        delete players[i];
     }
 }
 
@@ -73,6 +74,7 @@ void Game::start()
 
         std::cout << currentPlayer->getName() << "'s turn." << std::endl;
         printBank(currentPlayer);
+        std::cout << currentPlayer->getName() << "'s Current Score: " << currentPlayer->getCurrentScore() << std::endl;
 
         bool turnOver = false;
         while (!turnOver) {
@@ -85,14 +87,16 @@ void Game::start()
 
             std::cout << currentPlayer->getName() << " draws " << drawnCard->str() << "!" << std::endl;
             currentPlayer->addToPlayArea(drawnCard);
+
             if (drawnCard->shouldPlayImmediately()) {
                 drawnCard->play(*currentPlayer, *this);
             }
 
             std::cout << currentPlayer->getName() << "'s Play Area:" << std::endl;
-            for (Card* card : currentPlayer->getPlayArea()) {
-                if (card != nullptr) {
-                    std::cout << "  " << card->str() << std::endl;
+            const std::vector<Card*>& playArea = currentPlayer->getPlayArea();
+            for (size_t i = 0; i < playArea.size(); ++i) {
+                if (playArea[i] != nullptr) {
+                    std::cout << "  " << playArea[i]->str() << std::endl;
                 }
             }
 
@@ -108,15 +112,17 @@ void Game::start()
             if (choice == 'n' || choice == 'N') {
                 bankCards(*currentPlayer);
                 printBank(currentPlayer);
+                std::cout << currentPlayer->getName() << "'s Current Score: " << currentPlayer->getCurrentScore() << std::endl;
                 turnOver = true;
             }
             else if (choice == 'y' || choice == 'Y') {
-               
+                // continue
             }
             else {
                 std::cout << "Invalid input. Ending turn." << std::endl;
                 bankCards(*currentPlayer);
                 printBank(currentPlayer);
+                std::cout << currentPlayer->getName() << "'s Current Score: " << currentPlayer->getCurrentScore() << std::endl;
                 turnOver = true;
             }
         }
@@ -132,7 +138,7 @@ void Game::start()
 
 void Game::shuffleDeck()
 {
-    CardCollection shuffleDeck{ deck.begin(), deck.end() };
+    CardCollection shuffleDeck(deck.begin(), deck.end());
     std::shuffle(shuffleDeck.begin(), shuffleDeck.end(), std::mt19937{ std::random_device{}() });
     std::copy(shuffleDeck.begin(), shuffleDeck.end(), deck.begin());
 }
@@ -157,7 +163,6 @@ Card* Game::drawCard()
 void Game::bankCards(Player& player)
 {
     const std::vector<Card*>& playArea = player.getPlayArea();
-
     if (playArea.empty()) {
         std::cout << "No cards to bank." << std::endl;
         return;
@@ -176,33 +181,29 @@ void Game::bankCards(Player& player)
 
     bool hasChest = false;
     bool hasKey = false;
-    const std::vector<Card*>& playAreaBeforeBank = player.getPlayArea();
 
-    for (Card* card : playAreaBeforeBank) {
-        if (card != nullptr) {
-            if (card->type() == Card::CardType::Chest) {
+    for (size_t i = 0; i < playArea.size(); ++i) {
+        if (playArea[i] != nullptr) {
+            if (playArea[i]->type() == Card::CardType::Chest) {
                 hasChest = true;
             }
-            if (card->type() == Card::CardType::Key) {
+            if (playArea[i]->type() == Card::CardType::Key) {
                 hasKey = true;
             }
         }
     }
 
-    // Only here do we finally bank the play area
     player.bankPlayArea();
 
     if (hasChest && hasKey) {
         std::cout << "Chest and Key activated. Adding bonus cards from discard pile to bank..." << std::endl;
-
-        size_t bonusCardsToDraw = playAreaBeforeBank.size(); // Building up the bonus based on banked cards
+        size_t bonusCardsToDraw = playArea.size();
         for (size_t i = 0; i < bonusCardsToDraw && !discardPile.empty(); ++i) {
             Card* bonusCard = discardPile.back();
             discardPile.pop_back();
-
             if (bonusCard != nullptr) {
                 std::cout << "  Bonus: " << bonusCard->str() << std::endl;
-                player.addToBank(bonusCard); 
+                player.addToBank(bonusCard);
             }
         }
     }
@@ -214,23 +215,16 @@ bool Game::checkBust(const Player& player) const
     bool hasAnchor = false;
     std::vector<Suit> seenSuits;
 
-    for (Card* card : playArea) {
+    for (size_t i = 0; i < playArea.size(); ++i) {
+        Card* card = playArea[i];
         if (card == nullptr) continue;
-
         Suit suit = card->getSuit();
-
-        if (suit == Suit::Anchor)
-            hasAnchor = true;
-
-        for (Suit s : seenSuits) {
-            if (s == suit) {
-                if (hasAnchor)
-                    return false;
-                else
-                    return true;
+        if (suit == Suit::Anchor) hasAnchor = true;
+        for (size_t j = 0; j < seenSuits.size(); ++j) {
+            if (seenSuits[j] == suit) {
+                return !hasAnchor;
             }
         }
-
         seenSuits.push_back(suit);
     }
 
@@ -243,21 +237,21 @@ bool Game::handleBust(Player& player)
     std::vector<Suit> seenSuits;
     bool hasAnchor = false;
 
-    for (Card* card : playArea) {
+    for (size_t i = 0; i < playArea.size(); ++i) {
+        Card* card = playArea[i];
         if (card == nullptr) continue;
-
         Suit suit = card->getSuit();
         if (suit == Suit::Anchor) {
             hasAnchor = true;
         }
         else {
-            for (Suit s : seenSuits) {
-                if (s == suit) {
+            for (size_t j = 0; j < seenSuits.size(); ++j) {
+                if (seenSuits[j] == suit) {
                     if (hasAnchor) {
                         std::cout << "Anchor prevents bust (Anchor present)!" << std::endl;
-                        for (Card* c : playArea) {
-                            if (c != nullptr && c->getSuit() == Suit::Anchor) {
-                                c->play(player, *this);
+                        for (size_t k = 0; k < playArea.size(); ++k) {
+                            if (playArea[k] != nullptr && playArea[k]->getSuit() == Suit::Anchor) {
+                                playArea[k]->play(player, *this);
                                 break;
                             }
                         }
@@ -273,31 +267,43 @@ bool Game::handleBust(Player& player)
             seenSuits.push_back(suit);
         }
     }
-
     return false;
 }
 
 void Game::printBank(Player* player) const
 {
     if (player == nullptr) return;
-
     const std::vector<Card*>& bank = player->getBank();
-
     std::cout << player->getName() << "'s Bank:" << std::endl;
     if (bank.empty()) {
         std::cout << "  (empty)" << std::endl;
     }
     else {
-        for (Card* card : bank) {
-            if (card != nullptr)
-                std::cout << "  " << card->str() << std::endl;
+        for (size_t i = 0; i < bank.size(); ++i) {
+            if (bank[i] != nullptr) {
+                std::cout << "  " << bank[i]->str() << std::endl;
+            }
         }
     }
 }
 
-bool Game::isDeckEmpty() const
+void Game::printFinalScores() const
 {
-    return deck.empty();
+    std::cout << "\nFinal Scores:" << std::endl;
+    for (size_t i = 0; i < players.size(); ++i) {
+        Player* player = players[i];
+        if (player != nullptr) {
+            std::cout << player->getName() << ": " << player->getCurrentScore() << " points" << std::endl;
+        }
+    }
+
+    Player* winner = getWinner();
+    if (winner != nullptr) {
+        std::cout << "\nWinner is: " << winner->getName() << "!" << std::endl;
+    }
+    else {
+        std::cout << "\nIt's a tie!" << std::endl;
+    }
 }
 
 Player* Game::getCurrentPlayer() const
@@ -309,79 +315,29 @@ Player* Game::getCurrentPlayer() const
 Player* Game::getWinner() const
 {
     if (players.empty()) return nullptr;
-
     Player* winner = players[0];
-    int highestScore = 0;
+    int highestScore = winner->getCurrentScore();
     bool tie = false;
 
-    for (Player* player : players) {
-        int score = 0;
-        for (Card* card : player->getBank()) {
-            if (card != nullptr)
-                score += card->getPointValue();
-        }
-
+    for (size_t i = 1; i < players.size(); ++i) {
+        int score = players[i]->getCurrentScore();
         if (score > highestScore) {
             highestScore = score;
-            winner = player;
+            winner = players[i];
             tie = false;
         }
-        else if (score == highestScore && player != winner) {
+        else if (score == highestScore) {
             tie = true;
         }
     }
 
-    if (tie)
-        return nullptr;
-
+    if (tie) return nullptr;
     return winner;
 }
 
-void Game::addCardToDeck(Card* card)
+bool Game::isDeckEmpty() const
 {
-    if (card != nullptr) {
-        deck.push_back(card);
-    }
-}
-
-const std::vector<Player*>& Game::getPlayers() const
-{
-    return players;
-}
-
-void Game::discardPlayArea(Player& player)
-{
-    const std::vector<Card*>& playArea = player.getPlayArea();
-    for (Card* card : playArea) {
-        if (card != nullptr)
-            discardPile.push_back(card);
-    }
-
-    player.resetPlayArea();
-}
-
-void Game::printFinalScores() const
-{
-    std::cout << "Game finished." << std::endl;
-    std::cout << "\nFinal Scores:" << std::endl;
-
-    for (Player* p : players) {
-        if (p != nullptr) {
-            int score = 0;
-            const std::vector<Card*>& bank = p->getBank();
-            for (Card* card : bank) {
-                if (card != nullptr)
-                    score += card->getPointValue();
-            }
-            std::cout << p->getName() << ": " << score << " points" << std::endl;
-        }
-    }
-
-    Player* winner = getWinner();
-    if (winner != nullptr)
-        std::cout << "\nWinner is: " << winner->getName() << "!" << std::endl;
-    else
-        std::cout << "\nIt's a tie!" << std::endl;
+    return deck.empty();
 }
 
 const std::vector<Card*>& Game::getDiscardPile() const
@@ -394,6 +350,18 @@ const std::vector<Card*>& Game::getDeck() const
     return deck;
 }
 
+const std::vector<Player*>& Game::getPlayers() const
+{
+    return players;
+}
+
+void Game::addCardToDeck(Card* card)
+{
+    if (card != nullptr) {
+        deck.push_back(card);
+    }
+}
+
 void Game::addToDiscardPile(Card* card)
 {
     if (card != nullptr) {
@@ -401,14 +369,23 @@ void Game::addToDiscardPile(Card* card)
     }
 }
 
+void Game::discardPlayArea(Player& player)
+{
+    const std::vector<Card*>& playArea = player.getPlayArea();
+    for (size_t i = 0; i < playArea.size(); ++i) {
+        if (playArea[i] != nullptr) {
+            discardPile.push_back(playArea[i]);
+        }
+    }
+    player.resetPlayArea();
+}
+
 Card* Game::drawFromDiscardPile()
 {
     if (discardPile.empty()) {
         return nullptr;
     }
-
     Card* card = discardPile.back();
     discardPile.pop_back();
     return card;
 }
-

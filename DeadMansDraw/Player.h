@@ -4,15 +4,16 @@
 #include <string>
 #include "Card.h"
 
-class Player {
+class Game;
 
+class Player {
 private:
     Player* opponent = nullptr;
     Game* game;
-protected:
     std::string name;
     std::vector<Card*> bank;
     std::vector<Card*> playArea;
+    int currentScore = 0;
 
 public:
     Player(const std::string& name);
@@ -32,6 +33,6 @@ public:
     Game* getGame() const;
     Card* removeBankedCardAt(int index);
 
-
-
+    void updateScore();            // NEW
+    int getCurrentScore() const;    // NEW
 };
