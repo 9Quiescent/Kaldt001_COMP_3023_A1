@@ -33,4 +33,6 @@ public:
     void addCardToDeck(Card* card);
     const std::vector<Player*>& getPlayers() const;
     const std::vector<Card*>& getDiscardPile() const;
+    const std::vector<Card*>& getDeck() const;
+
 };

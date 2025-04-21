@@ -8,6 +8,7 @@ class Player {
 
 private:
     Player* opponent = nullptr;
+    Game* game;
 protected:
     std::string name;
     std::vector<Card*> bank;
@@ -27,5 +28,8 @@ public:
     void setOpponent(Player* opponent);
     Player* getOpponent() const;
     Card* removeLastBankedCard();
+    void setGame(Game* game);
+    Game* getGame() const;
+
 
 };

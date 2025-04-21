@@ -31,7 +31,10 @@ Game::~Game()
 
 void Game::addPlayer(Player* player)
 {
-    players.push_back(player);
+    if (player != nullptr) {
+        player->setGame(this);
+        players.push_back(player);
+    }
 }
 
 void Game::start()
@@ -382,3 +385,9 @@ const std::vector<Card*>& Game::getDiscardPile() const
 {
     return discardPile;
 }
+
+const std::vector<Card*>& Game::getDeck() const
+{
+    return deck;
+}
+

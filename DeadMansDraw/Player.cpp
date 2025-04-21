@@ -1,9 +1,10 @@
 #include "Player.h"
+#include "Game.h"
 
 Player::Player(const std::string& name)
-    : name(name)
+    : name(name), game(nullptr)
 {
-    // I'm going to initialise the bank and playArea vectors here
+    // I'm going to clean up any dynamic memory here if needed
 }
 
 Player::~Player() {
@@ -64,3 +65,12 @@ Card* Player::removeLastBankedCard() {
     return stolenCard;
 }
 
+void Player::setGame(Game* game)
+{
+    this->game = game;
+}
+
+Game* Player::getGame() const
+{
+    return game;
+}

@@ -7,6 +7,5 @@ class OracleCard : public Card {
 public:
     OracleCard(int pointValue);
     ~OracleCard();
-
     void play(Player& player, Game& game) override;
 };
