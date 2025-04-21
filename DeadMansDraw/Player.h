@@ -18,7 +18,6 @@ private:
 public:
     Player(const std::string& name);
     ~Player();
-
     void addToPlayArea(Card* card);
     void bankPlayArea();
     void resetPlayArea();
@@ -32,7 +31,8 @@ public:
     void setGame(Game* game);
     Game* getGame() const;
     Card* removeBankedCardAt(int index);
-
-    void updateScore();            // NEW
-    int getCurrentScore() const;    // NEW
+    void updateScore();            
+    int getCurrentScore() const;  
+    bool checkBust() const;
+    bool handleBust(Game& game);
 };

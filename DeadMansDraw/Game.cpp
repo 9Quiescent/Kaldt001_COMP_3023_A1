@@ -223,63 +223,12 @@ void Game::bankCards(Player& player)
 
 bool Game::checkBust(const Player& player) const
 {
-    const std::vector<Card*>& playArea = player.getPlayArea();
-    bool hasAnchor = false;
-    std::vector<Suit> seenSuits;
-
-    for (size_t i = 0; i < playArea.size(); ++i) {
-        Card* card = playArea[i];
-        if (card == nullptr) continue;
-        Suit suit = card->getSuit();
-        if (suit == Suit::Anchor) hasAnchor = true;
-        for (size_t j = 0; j < seenSuits.size(); ++j) {
-            if (seenSuits[j] == suit) {
-                return !hasAnchor;
-            }
-        }
-        seenSuits.push_back(suit);
-    }
-
-    return false;
+    return player.checkBust();
 }
 
 bool Game::handleBust(Player& player)
 {
-    const std::vector<Card*>& playArea = player.getPlayArea();
-    std::vector<Suit> seenSuits;
-    bool hasAnchor = false;
-
-    for (size_t i = 0; i < playArea.size(); ++i) {
-        Card* card = playArea[i];
-        if (card == nullptr) continue;
-        Suit suit = card->getSuit();
-        if (suit == Suit::Anchor) {
-            hasAnchor = true;
-        }
-        else {
-            for (size_t j = 0; j < seenSuits.size(); ++j) {
-                if (seenSuits[j] == suit) {
-                    if (hasAnchor) {
-                        std::cout << "Anchor prevents bust!" << std::endl;
-                        for (size_t k = 0; k < playArea.size(); ++k) {
-                            if (playArea[k] != nullptr && playArea[k]->getSuit() == Suit::Anchor) {
-                                playArea[k]->play(player, *this);
-                                break;
-                            }
-                        }
-                        return false;
-                    }
-                    else {
-                        std::cout << "BUST! " << player.getName() << " loses all cards in play area." << std::endl;
-                        discardPlayArea(player);
-                        return true;
-                    }
-                }
-            }
-            seenSuits.push_back(suit);
-        }
-    }
-    return false;
+    return player.handleBust(*this);
 }
 
 void Game::printBank(Player* player) const
