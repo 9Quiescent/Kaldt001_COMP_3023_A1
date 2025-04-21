@@ -21,7 +21,10 @@ GameController::GameController()
 GameController::~GameController()
 {
     delete game;
+    game = nullptr;
     delete playerController;
+    playerController = nullptr;
+
 }
 
 void GameController::startGame()
