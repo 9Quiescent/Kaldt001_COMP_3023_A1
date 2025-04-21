@@ -1,6 +1,6 @@
 #include "SwordCardAbility.h"
 #include "Player.h"
-#include "Card.h"
+#include "Game.h"
 #include <iostream>
 
 void SwordCardAbility::apply(Card& card, Player& player)
@@ -8,24 +8,70 @@ void SwordCardAbility::apply(Card& card, Player& player)
     std::cout << "Sword Ability Activated: Attempting to steal a card from opponent's bank..." << std::endl;
 
     Player* opponent = player.getOpponent();
-    if (opponent == nullptr)
-    {
-        std::cout << "No opponent found. Sword ability fails." << std::endl; //need this for debugging  while coding the targetting on this ability
+    if (opponent == nullptr) {
+        std::cout << "No opponent found. Sword ability fails." << std::endl;
         return;
     }
 
     const std::vector<Card*>& opponentBank = opponent->getBank();
-    if (opponentBank.empty())
-    {
+    if (opponentBank.empty()) {
         std::cout << "Opponent's bank is empty. No card to steal." << std::endl;
         return;
     }
 
-    Card* stolenCard = opponent->removeLastBankedCard();
+    // See CannonCardAbility
+    int highestValue = 0;
+    for (int i = 0; i < opponentBank.size(); ++i)
+    {
+        if (opponentBank[i] != nullptr)
+        {
+            int value = opponentBank[i]->getPointValue();
+            if (value > highestValue)
+            {
+                highestValue = value;
+            }
+        }
+    }
+
+    // See CannonCardAbility
+    std::vector<int> highestValueIndexes;
+    for (int i = 0; i < opponentBank.size(); ++i)
+    {
+        if (opponentBank[i] != nullptr && opponentBank[i]->getPointValue() == highestValue)
+        {
+            highestValueIndexes.push_back(i);
+        }
+    }
+
+    // See CannonCardAbility
+    std::cout << "Choose a card to steal from opponent's bank:" << std::endl;
+    for (int i = 0; i < highestValueIndexes.size(); ++i)
+    {
+        int idx = highestValueIndexes[i];
+        if (opponentBank[idx] != nullptr)
+        {
+            std::cout << i << ": " << opponentBank[idx]->str() << std::endl;
+        }
+    }
+
+    int choice = 0;
+    std::cout << "Enter choice index: ";
+    std::cin >> choice;
+
+    
+    if (choice < 0 || choice >= highestValueIndexes.size())
+    {
+        std::cout << "Invalid choice. Defaulting to first option." << std::endl;
+        choice = 0;
+    }
+
+    // Again, very similar, but we steal instead of destroy ("discard")
+    int bankIndex = highestValueIndexes[choice];
+    Card* stolenCard = opponent->removeBankedCardAt(bankIndex);
     if (stolenCard != nullptr)
     {
         player.addToPlayArea(stolenCard);
-        std::cout << "Successfully stole " << stolenCard->str() << " from " << opponent->getName() << "'s bank and added it to your play area." << std::endl;
+        std::cout << "Successfully stole " << stolenCard->str() << " from opponent's bank and added it to your play area." << std::endl;
     }
     else
     {

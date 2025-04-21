@@ -70,7 +70,7 @@ void CannonCardAbility::apply(Card& card, Player& player)
     if (destroyedCard != nullptr)
     {
         player.getGame()->addToDiscardPile(destroyedCard); 
-        std::cout << "Successfully destroyed " << destroyedCard->str() << " from opponent's bank!" << std::endl;
+        std::cout << "Successfully destroyed " << destroyedCard->str() << " from opponent's bank, straight to the discard pile!" << std::endl;
     }
     else
     {
