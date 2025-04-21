@@ -10,6 +10,8 @@
 #include "MermaidCard.h"
 #include "OracleCard.h"
 #include <iostream>
+#include <cstdlib> 
+#include <ctime>
 
 GameController::GameController()
     : game(nullptr), playerController(nullptr)
@@ -27,8 +29,22 @@ void GameController::startGame()
     game = new Game();
     playerController = new HumanPlayerController();
 
-    Player* player1 = new Player("Billy");
-    Player* player2 = new Player("Sasha");
+    srand(time(0)); 
+
+    std::string possibleNames[] = {
+        "Billy", "Sasha", "Mira", "Leo", "Nina", "Dante", "Aria", "Kai"
+    };
+    const int nameCount = sizeof(possibleNames) / sizeof(possibleNames[0]);
+
+    std::string name1 = possibleNames[rand() % nameCount];
+    std::string name2 = possibleNames[rand() % nameCount];
+
+    while (name1 == name2) {
+        name2 = possibleNames[rand() % nameCount];
+    }
+
+    Player* player1 = new Player(name1);
+    Player* player2 = new Player(name2);
 
     player1->setOpponent(player2);
     player2->setOpponent(player1);
