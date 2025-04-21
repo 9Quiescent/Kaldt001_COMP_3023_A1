@@ -20,4 +20,6 @@ public:
     const std::vector<Card*>& getBank() const;
     const std::vector<Card*>& getPlayArea() const;
     std::string getName() const;
+    void addToBank(Card* card);
+
 };

@@ -40,3 +40,10 @@ const std::vector<Card*>& Player::getPlayArea() const {
 std::string Player::getName() const {
     return name;
 }
+
+void Player::addToBank(Card* card)
+{
+    if (card != nullptr)
+        bank.push_back(card);
+}
+

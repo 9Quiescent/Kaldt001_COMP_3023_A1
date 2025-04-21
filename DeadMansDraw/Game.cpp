@@ -102,7 +102,7 @@ void Game::start()
                 turnOver = true;
             }
             else if (choice == 'y' || choice == 'Y') {
-                // Player chooses to continue drawing
+               
             }
             else {
                 std::cout << "Invalid input. Ending turn." << std::endl;
@@ -165,7 +165,38 @@ void Game::bankCards(Player& player)
     }
     std::cout << " to your bank." << std::endl;
 
+    bool hasChest = false;
+    bool hasKey = false;
+    const std::vector<Card*>& playAreaBeforeBank = player.getPlayArea();
+
+    for (Card* card : playAreaBeforeBank) {
+        if (card != nullptr) {
+            if (card->type() == Card::CardType::Chest) {
+                hasChest = true;
+            }
+            if (card->type() == Card::CardType::Key) {
+                hasKey = true;
+            }
+        }
+    }
+
+    // Only here do we finally bank the play area
     player.bankPlayArea();
+
+    if (hasChest && hasKey) {
+        std::cout << "Chest and Key activated. Adding bonus cards from discard pile to bank..." << std::endl;
+
+        size_t bonusCardsToDraw = playAreaBeforeBank.size(); // Building up the bonus based on banked cards
+        for (size_t i = 0; i < bonusCardsToDraw && !discardPile.empty(); ++i) {
+            Card* bonusCard = discardPile.back();
+            discardPile.pop_back();
+
+            if (bonusCard != nullptr) {
+                std::cout << "  Bonus: " << bonusCard->str() << std::endl;
+                player.addToBank(bonusCard); 
+            }
+        }
+    }
 }
 
 bool Game::checkBust(const Player& player) const
@@ -342,4 +373,9 @@ void Game::printFinalScores() const
         std::cout << "\nWinner is: " << winner->getName() << "!" << std::endl;
     else
         std::cout << "\nIt's a tie!" << std::endl;
+}
+
+const std::vector<Card*>& Game::getDiscardPile() const
+{
+    return discardPile;
 }
