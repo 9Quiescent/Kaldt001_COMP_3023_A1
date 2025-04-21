@@ -391,3 +391,10 @@ const std::vector<Card*>& Game::getDeck() const
     return deck;
 }
 
+void Game::addToDiscardPile(Card* card)
+{
+    if (card != nullptr) {
+        discardPile.push_back(card);
+    }
+}
+

@@ -74,3 +74,14 @@ Game* Player::getGame() const
 {
     return game;
 }
+
+Card* Player::removeBankedCardAt(int index)
+{
+    if (index >= bank.size()) {
+        return nullptr;
+    }
+
+    Card* removedCard = bank[index];
+    bank.erase(bank.begin() + index);
+    return removedCard;
+}

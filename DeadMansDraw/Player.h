@@ -30,6 +30,8 @@ public:
     Card* removeLastBankedCard();
     void setGame(Game* game);
     Game* getGame() const;
+    Card* removeBankedCardAt(int index);
+
 
 
 };

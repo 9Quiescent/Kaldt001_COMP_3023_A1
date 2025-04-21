@@ -1,4 +1,5 @@
 #pragma once
+
 #include "ICardAbility.h"
 
 class CannonCardAbility : public ICardAbility {

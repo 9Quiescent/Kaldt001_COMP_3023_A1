@@ -34,5 +34,6 @@ public:
     const std::vector<Player*>& getPlayers() const;
     const std::vector<Card*>& getDiscardPile() const;
     const std::vector<Card*>& getDeck() const;
+    void addToDiscardPile(Card* card);
 
 };
