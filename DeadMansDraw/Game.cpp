@@ -79,6 +79,9 @@ void Game::start()
 
             std::cout << currentPlayer->getName() << " draws " << drawnCard->str() << "!" << std::endl;
             currentPlayer->addToPlayArea(drawnCard);
+            if (drawnCard->shouldPlayImmediately()) {
+                drawnCard->play(*currentPlayer, *this);
+            }
 
             std::cout << currentPlayer->getName() << "'s Play Area:" << std::endl;
             for (Card* card : currentPlayer->getPlayArea()) {

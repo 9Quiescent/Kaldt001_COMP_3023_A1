@@ -33,4 +33,7 @@ public:
 
     virtual void play(Player& player, Game& game) = 0;
     virtual void willAddToBank(Game& game, Player& player) {}
+    virtual bool shouldPlayImmediately() const {
+        return true; 
+    }
 };

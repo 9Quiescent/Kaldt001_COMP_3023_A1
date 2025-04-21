@@ -47,3 +47,20 @@ void Player::addToBank(Card* card)
         bank.push_back(card);
 }
 
+void Player::setOpponent(Player* opponent) {
+    this->opponent = opponent;
+}
+
+Player* Player::getOpponent() const {
+    return opponent;
+}
+
+Card* Player::removeLastBankedCard() {
+    if (bank.empty())
+        return nullptr;
+
+    Card* stolenCard = bank.back();
+    bank.pop_back();
+    return stolenCard;
+}
+

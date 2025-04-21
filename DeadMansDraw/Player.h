@@ -5,6 +5,9 @@
 #include "Card.h"
 
 class Player {
+
+private:
+    Player* opponent = nullptr;
 protected:
     std::string name;
     std::vector<Card*> bank;
@@ -21,5 +24,8 @@ public:
     const std::vector<Card*>& getPlayArea() const;
     std::string getName() const;
     void addToBank(Card* card);
+    void setOpponent(Player* opponent);
+    Player* getOpponent() const;
+    Card* removeLastBankedCard();
 
 };

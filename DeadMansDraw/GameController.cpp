@@ -30,6 +30,9 @@ void GameController::startGame()
     Player* player1 = new Player("Billy");
     Player* player2 = new Player("Sasha");
 
+    player1->setOpponent(player2);
+    player2->setOpponent(player1);
+
     game->addPlayer(player1);
     game->addPlayer(player2);
 
