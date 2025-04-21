@@ -24,6 +24,9 @@ Game::~Game()
     for (Card* card : deck) {
         delete card;
     }
+    for (Card* card : discardPile) {
+        delete card;
+    }
     for (Player* player : players) {
         delete player;
     }

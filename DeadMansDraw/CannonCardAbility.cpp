@@ -58,9 +58,14 @@ void CannonCardAbility::apply(Card& card, Player& player)
     std::cout << "Enter choice index: ";
     std::cin >> choice;
 
-    if (choice < 0 || choice >= highestValueIndexes.size())
-    {
-        std::cout << "Invalid choice. Recieving default selection (first available card)." << std::endl;
+    if (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+        std::cout << "Invalid input (non-number)! Defaulting to first option." << std::endl;
+        choice = 0;
+    }
+    else if (choice < 0 || choice >= opponentBank.size()) {
+        std::cout << "Invalid choice. Defaulting to first option." << std::endl;
         choice = 0;
     }
 
