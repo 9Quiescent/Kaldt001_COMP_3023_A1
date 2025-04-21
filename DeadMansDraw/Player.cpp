@@ -85,3 +85,27 @@ Card* Player::removeBankedCardAt(int index)
     bank.erase(bank.begin() + index);
     return removedCard;
 }
+
+bool Player::isBust() const
+{
+    std::vector<Suit> seenSuits;
+    bool hasAnchor = false;
+
+    for (Card* card : playArea) {
+        if (card == nullptr) continue;
+
+        Suit suit = card->getSuit();
+        if (suit == Suit::Anchor) {
+            hasAnchor = true;
+        }
+        else {
+            for (Suit s : seenSuits) {
+                if (s == suit) {
+                    return !hasAnchor;  // If anchor exists, not a bust
+                }
+            }
+            seenSuits.push_back(suit);
+        }
+    }
+    return false;
+}

@@ -72,6 +72,8 @@ void Game::start()
         printBank(currentPlayer);
 
         bool turnOver = false;
+        bool busted = false; 
+
         while (!turnOver) {
             Card* drawnCard = drawCard();
             if (drawnCard == nullptr) {
@@ -82,25 +84,34 @@ void Game::start()
 
             std::cout << currentPlayer->getName() << " draws " << drawnCard->str() << "!" << std::endl;
             currentPlayer->addToPlayArea(drawnCard);
+
             if (drawnCard->shouldPlayImmediately()) {
                 drawnCard->play(*currentPlayer, *this);
             }
 
             std::cout << currentPlayer->getName() << "'s Play Area:" << std::endl;
-            for (Card* card : currentPlayer->getPlayArea()) {
+            for (size_t i = 0; i < currentPlayer->getPlayArea().size(); ++i) {
+                Card* card = currentPlayer->getPlayArea()[i];
                 if (card != nullptr) {
                     std::cout << "  " << card->str() << std::endl;
                 }
             }
 
             if (handleBust(*currentPlayer)) {
+                busted = true;
                 turnOver = true;
                 break;
+            }
+
+            if (busted) {
+                break; // If the check on if the player is bust is true, break out so there's no chance to draw again
             }
 
             char choice;
             std::cout << "Draw again? (y/n): ";
             std::cin >> choice;
+
+            //Otherwise they get the draw dialogue.
 
             if (choice == 'n' || choice == 'N') {
                 bankCards(*currentPlayer);
@@ -108,14 +119,16 @@ void Game::start()
                 turnOver = true;
             }
             else if (choice == 'y' || choice == 'Y') {
-               
+                // If they say yes, then they obviously draw a card
             }
             else {
-                std::cout << "Invalid input. Ending turn." << std::endl;
+                std::cout << "Invalid input. i'll take that as a fat 'no' matey!" << std::endl;
                 bankCards(*currentPlayer);
                 printBank(currentPlayer);
                 turnOver = true;
             }
+
+            
         }
 
         if (!gameOver) {
@@ -142,7 +155,7 @@ void Game::nextTurn()
 Card* Game::drawCard()
 {
     if (deck.empty()) {
-        std::cout << "Warning: Deck is empty." << std::endl;
+        std::cout << "Open your eyes! The Deck is empty!" << std::endl;
         return nullptr;
     }
 
@@ -236,39 +249,11 @@ bool Game::checkBust(const Player& player) const
 
 bool Game::handleBust(Player& player)
 {
-    const std::vector<Card*>& playArea = player.getPlayArea();
-    std::vector<Suit> seenSuits;
-    bool hasAnchor = false;
-
-    for (Card* card : playArea) {
-        if (card == nullptr) continue;
-
-        Suit suit = card->getSuit();
-        if (suit == Suit::Anchor) {
-            hasAnchor = true;
-        }
-        else {
-            for (Suit s : seenSuits) {
-                if (s == suit) {
-                    if (hasAnchor) {
-                        std::cout << "Anchor prevents bust (Anchor present)!" << std::endl;
-                        for (Card* c : playArea) {
-                            if (c != nullptr && c->getSuit() == Suit::Anchor) {
-                                c->play(player, *this);
-                                break;
-                            }
-                        }
-                        return false;
-                    }
-                    else {
-                        std::cout << "BUST! " << player.getName() << " loses all cards in play area." << std::endl;
-                        discardPlayArea(player);
-                        return true;
-                    }
-                }
-            }
-            seenSuits.push_back(suit);
-        }
+    if (player.isBust())
+    {
+        std::cout << "BUST! " << player.getName() << " loses all cards in play area." << std::endl;
+        discardPlayArea(player);
+        return true;
     }
 
     return false;
