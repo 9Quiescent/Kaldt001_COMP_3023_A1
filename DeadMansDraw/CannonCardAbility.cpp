@@ -60,11 +60,11 @@ void CannonCardAbility::apply(Card& card, Player& player)
 
     if (std::cin.fail()) {
         std::cin.clear();
-        std::cin.ignore(10000, '\n');
+        std::cin.ignore(10000, '\n'); // Same input handling approach
         std::cout << "Invalid input (non-number)! Defaulting to first option." << std::endl;
         choice = 0;
     }
-    else if (choice < 0 || choice >= opponentBank.size()) {
+    else if (choice < 0 || choice >= highestValueIndexes.size()) {
         std::cout << "Invalid choice. Defaulting to first option." << std::endl;
         choice = 0;
     }
