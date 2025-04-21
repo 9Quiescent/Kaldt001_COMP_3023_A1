@@ -3,9 +3,12 @@
 #include "Suit.h"
 #include "ICardAbility.h"
 #include <string>
+#include <vector> 
 
 class Player;
 class Game;
+
+typedef std::vector<Card*> CardCollection;
 
 class Card {
 public:

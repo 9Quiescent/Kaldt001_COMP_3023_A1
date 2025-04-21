@@ -12,6 +12,7 @@
 #include <iostream>
 #include <algorithm>
 #include <random>
+#include <iterator>
 
 Game::Game()
     : currentPlayerIndex(0), gameOver(false)
@@ -122,9 +123,9 @@ void Game::start()
 
 void Game::shuffleDeck()
 {
-    std::random_device rd;
-    std::default_random_engine g(rd());
-    std::shuffle(deck.begin(), deck.end(), g);
+    CardCollection shuffleDeck{ deck.begin(), deck.end() };
+    std::shuffle(shuffleDeck.begin(), shuffleDeck.end(), std::mt19937{ std::random_device{}() });
+    std::copy(shuffleDeck.begin(), shuffleDeck.end(), deck.begin());
 }
 
 void Game::nextTurn()
