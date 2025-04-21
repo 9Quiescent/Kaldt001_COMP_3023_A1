@@ -13,5 +13,5 @@ public:
     GameController();
     ~GameController();
     void startGame();
-    void promptPlayerAction(); 
+    void promptPlayerAction();
 };

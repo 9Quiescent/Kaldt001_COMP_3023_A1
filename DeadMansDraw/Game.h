@@ -18,18 +18,18 @@ public:
 
     void addPlayer(Player* player);
     void start();
+    void shuffleDeck();
     void nextTurn();
     Card* drawCard();
     void bankCards(Player& player);
     bool checkBust(const Player& player) const;
+    bool handleBust(Player& player);
+    void discardPlayArea(Player& player);
     void printBank(Player* player) const;
+    void printFinalScores() const;
     bool isDeckEmpty() const;
     Player* getCurrentPlayer() const;
     Player* getWinner() const;
     void addCardToDeck(Card* card);
     const std::vector<Player*>& getPlayers() const;
-    void discardPlayArea(Player& player);
-    bool handleBust(Player& player);
-    void printFinalScores() const;
-    void shuffleDeck();
 };

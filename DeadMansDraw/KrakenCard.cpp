@@ -1,17 +1,12 @@
 #include "KrakenCard.h"
 
 KrakenCard::KrakenCard(int pointValue)
-    : Card(Suit::Kraken, pointValue, new KrakenCardAbility())
+    : Card(Suit::Kraken, pointValue, CardType::Kraken, new KrakenCardAbility())
 {
 }
 
 KrakenCard::~KrakenCard()
 {
-}
-
-std::string KrakenCard::toString() const
-{
-    return "Kraken";
 }
 
 void KrakenCard::play(Player& player, Game& game)

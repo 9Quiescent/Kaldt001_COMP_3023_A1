@@ -1,17 +1,12 @@
 #include "MermaidCard.h"
 
 MermaidCard::MermaidCard(int pointValue)
-    : Card(Suit::Mermaid, pointValue, new MermaidCardAbility())
+    : Card(Suit::Mermaid, pointValue, CardType::Mermaid, new MermaidCardAbility())
 {
 }
 
 MermaidCard::~MermaidCard()
 {
-}
-
-std::string MermaidCard::toString() const
-{
-    return "Mermaid";
 }
 
 void MermaidCard::play(Player& player, Game& game)

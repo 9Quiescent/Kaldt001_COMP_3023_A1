@@ -15,7 +15,7 @@ void AnchorCardAbility::apply(Card& card, Player& player)
     {
         if (bank[i] != nullptr)
         {
-            std::cout << bank[i]->toStringWithPoints();
+            std::cout << bank[i]->str();
             if (i != bank.size() - 1)
                 std::cout << ", ";
         }

@@ -22,7 +22,8 @@ GameController::~GameController()
     delete playerController;
 }
 
-void GameController::startGame() {
+void GameController::startGame()
+{
     game = new Game();
     playerController = new HumanPlayerController();
 
@@ -32,7 +33,7 @@ void GameController::startGame() {
     game->addPlayer(player1);
     game->addPlayer(player2);
 
-    game->start(); 
+    game->start();
 }
 
 void GameController::promptPlayerAction()

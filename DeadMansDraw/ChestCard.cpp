@@ -1,17 +1,12 @@
 #include "ChestCard.h"
 
 ChestCard::ChestCard(int pointValue)
-    : Card(Suit::Chest, pointValue, new ChestCardAbility())
+    : Card(Suit::Chest, pointValue, CardType::Chest, new ChestCardAbility())
 {
 }
 
 ChestCard::~ChestCard()
 {
-}
-
-std::string ChestCard::toString() const
-{
-    return "Chest";
 }
 
 void ChestCard::play(Player& player, Game& game)

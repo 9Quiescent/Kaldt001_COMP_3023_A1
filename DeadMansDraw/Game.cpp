@@ -37,7 +37,6 @@ void Game::start()
 {
     std::cout << "Starting Game..." << std::endl;
 
-    // Sets the deck up
     for (int i = 0; i < 6; ++i) {
         addCardToDeck(new AnchorCard(5));
         addCardToDeck(new CannonCard(4));
@@ -77,13 +76,13 @@ void Game::start()
                 break;
             }
 
-            std::cout << currentPlayer->getName() << " draws " << drawnCard->toStringWithPoints() << "!" << std::endl;
+            std::cout << currentPlayer->getName() << " draws " << drawnCard->str() << "!" << std::endl;
             currentPlayer->addToPlayArea(drawnCard);
 
             std::cout << currentPlayer->getName() << "'s Play Area:" << std::endl;
             for (Card* card : currentPlayer->getPlayArea()) {
                 if (card != nullptr) {
-                    std::cout << "  " << card->toStringWithPoints() << std::endl;
+                    std::cout << "  " << card->str() << std::endl;
                 }
             }
 
@@ -92,7 +91,6 @@ void Game::start()
                 break;
             }
 
-            // prompt for drawing
             char choice;
             std::cout << "Draw again? (y/n): ";
             std::cin >> choice;
@@ -103,7 +101,7 @@ void Game::start()
                 turnOver = true;
             }
             else if (choice == 'y' || choice == 'Y') {
-                // If they chose yes, draw again
+                // Player chooses to continue drawing
             }
             else {
                 std::cout << "Invalid input. Ending turn." << std::endl;
@@ -158,7 +156,7 @@ void Game::bankCards(Player& player)
     std::cout << "Added ";
     for (size_t i = 0; i < playArea.size(); ++i) {
         if (playArea[i] != nullptr) {
-            std::cout << playArea[i]->toStringWithPoints();
+            std::cout << playArea[i]->str();
             if (i != playArea.size() - 1) {
                 std::cout << ", ";
             }
@@ -218,7 +216,7 @@ bool Game::handleBust(Player& player)
                         std::cout << "Anchor prevents bust (Anchor present)!" << std::endl;
                         for (Card* c : playArea) {
                             if (c != nullptr && c->getSuit() == Suit::Anchor) {
-                                c->play(player, *this); 
+                                c->play(player, *this);
                                 break;
                             }
                         }
@@ -251,7 +249,7 @@ void Game::printBank(Player* player) const
     else {
         for (Card* card : bank) {
             if (card != nullptr)
-                std::cout << "  " << card->toStringWithPoints() << std::endl;
+                std::cout << "  " << card->str() << std::endl;
         }
     }
 }
