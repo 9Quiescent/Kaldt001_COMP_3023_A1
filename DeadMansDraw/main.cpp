@@ -3,4 +3,5 @@
 int main() {
     GameController controller;
     controller.startGame();
+    return 0;
 }

@@ -103,6 +103,9 @@ void Game::start()
             if (drawnCard->shouldPlayImmediately()) {
                 drawnCard->play(*currentPlayer, *this);
             }
+            else {
+                std::cout << "No Immediate effect." << std::endl;
+            }
 
             std::cout << currentPlayer->getName() << "'s Play Area:" << std::endl;
             const std::vector<Card*>& playArea = currentPlayer->getPlayArea();
